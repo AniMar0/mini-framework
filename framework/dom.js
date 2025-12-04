@@ -252,3 +252,51 @@ export function render(component, target) {
     const vNode = typeof component === 'function' ? component() : component;
     mount(target, vNode);
 }
+
+// ===============================
+// Fragment - Render multiple elements without wrapper
+// ===============================
+
+export function Fragment(props) {
+    return props.children || [];
+}
+
+// ===============================
+// Utility Functions
+// ===============================
+
+/**
+ * Create element with automatic key handling for lists
+ * @param {Array} items - Array of items
+ * @param {Function} renderFn - Function to render each item
+ * @returns {Array} Array of virtual nodes
+ */
+export function mapElements(items, renderFn) {
+    return items.map((item, index) => {
+        const vNode = renderFn(item, index);
+        if (vNode && typeof vNode === 'object') {
+            vNode.key = item.id ?? index;
+        }
+        return vNode;
+    });
+}
+
+/**
+ * Conditional rendering helper
+ * @param {boolean} condition - Condition to check
+ * @param {*} trueValue - Value if true
+ * @param {*} falseValue - Value if false (optional)
+ * @returns {*} Result based on condition
+ */
+export function when(condition, trueValue, falseValue = null) {
+    return condition ? trueValue : falseValue;
+}
+
+/**
+ * Create a component function
+ * @param {Function} renderFn - Render function
+ * @returns {Function} Component function
+ */
+export function component(renderFn) {
+    return (props = {}) => renderFn(props);
+}

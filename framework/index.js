@@ -1,12 +1,37 @@
-import { createElement } from "./dom.js";
-import { Router } from "./router.js";
-import { Store } from "./state.js";
-import { Events } from "./events.js";
+// ===============================
+// Mini-Framework - Main Entry Point
+// ===============================
 
-// Export framework API
-export default {
-    createElement,
+// DOM & Virtual DOM
+export { createElement, el, mount, render } from './dom.js';
+
+// Event System
+export { 
+    bindEvent, 
+    addListener, 
+    removeListener, 
+    removeAllListeners,
+    EventEmitter,
+    eventBus 
+} from './events.js';
+
+// Router
+export { 
     Router,
+    initRouter, 
+    addRoute, 
+    navigate, 
+    getCurrentRoute, 
+    onRouteChange,
+    setNotFound,
+    goBack,
+    goForward
+} from './router.js';
+
+// State Management
+export { 
     Store,
-    Events
-};
+    createStore, 
+    createReducerStore, 
+    combineReducers 
+} from './state.js';
